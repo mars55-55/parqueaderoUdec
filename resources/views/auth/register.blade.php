@@ -16,6 +16,24 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Numero de Documento -->
+        <div class="mt-4">
+            <x-input-label for="numero_documento" :value="__('Número de Documento')" />
+            <x-text-input id="numero_documento" class="block mt-1 w-full" type="text" name="numero_documento" :value="old('numero_documento')" required autocomplete="numero_documento" />
+            <x-input-error :messages="$errors->get('numero_documento')" class="mt-2" />
+        </div>
+
+        <!-- Tipo de Usuario -->
+        <div class="mt-4">
+            <x-input-label for="tipo_usuario" :value="__('Tipo de Usuario')" />
+            <select id="tipo_usuario" name="tipo_usuario" class="block mt-1 w-full" required>
+                <option value="Estudiante">Estudiante</option>
+                <option value="Docente">Docente</option>
+                <option value="Administrativo">Administrativo</option>
+            </select>
+            <x-input-error :messages="$errors->get('tipo_usuario')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

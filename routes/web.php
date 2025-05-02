@@ -3,6 +3,7 @@
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HistorialController;
+use App\Http\Controllers\EntradaController;
 use Illuminate\Support\Facades\Route;
 
 // Página de inicio
@@ -44,6 +45,15 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('historial', [HistorialController::class, 'index'])->name('historial.index');
     Route::get('historial/filtrar', [HistorialController::class, 'filter'])->name('historial.filter');
+});
+
+// Rutas de entradas y salidas (solo si está autenticado)
+Route::middleware(['auth', 'role:Vigilante'])->group(function () {
+    Route::get('/entrada', [EntradaController::class, 'showEntradaForm'])->name('entrada.registrar');
+    Route::post('/entrada', [EntradaController::class, 'registrarEntrada']);
+    Route::get('/salida', [EntradaController::class, 'showSalidaForm'])->name('salida.registrar');
+    Route::post('/salida', [EntradaController::class, 'registrarSalida']);
+    Route::get('/historial', [EntradaController::class, 'historial'])->name('historial.index');
 });
 
 // Cerrar sesión
