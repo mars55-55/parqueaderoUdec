@@ -3,11 +3,14 @@
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HistorialController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+
 use Illuminate\Support\Facades\Route;
 
 // Página de inicio
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
 // Dashboard - Acceso solo para usuarios autenticados
@@ -17,10 +20,10 @@ Route::middleware(['auth', 'verified'])->get('/dashboard', function () {
 
 // Rutas de autenticación (registro, login)
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [RegisterController::class, 'register']);
+    Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthenticatedSessionController::class, 'login']);
+    Route::get('/register', [RegisteredUserController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'register']);
 });
 
 // Rutas de perfil de usuario (solo si está autenticado)
@@ -47,6 +50,6 @@ Route::middleware('auth')->group(function () {
 });
 
 // Cerrar sesión
-Route::middleware('auth')->post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::middleware('auth')->post('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
 
 require __DIR__.'/auth.php';
