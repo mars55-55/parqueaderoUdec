@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('password.update');
 });
 
 // Rutas de vehículos (solo si está autenticado)
@@ -55,3 +56,9 @@ Route::middleware('auth')->post('/logout', [AuthenticatedSessionController::clas
 
 // Rutas de autenticación adicionales
 require __DIR__.'/auth.php';
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');

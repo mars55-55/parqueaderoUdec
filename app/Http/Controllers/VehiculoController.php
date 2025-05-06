@@ -29,35 +29,39 @@ class VehiculoController extends Controller
 
     public function store(Request $request)
     {
-        // Validación de datos
-        $request->validate([
-            'placa' => 'required|unique:vehiculos,placa',
-            'tipo' => 'required|in:Auto,Moto',
-            'color' => 'nullable|string',
-            'marca' => 'nullable|string',
-            'modelo' => 'nullable|string',
+        // Validar los datos del vehículo
+        $validatedData = $request->validate([
+            'placa' => 'required|string|max:7',
+            'tipo' => 'required|string',
+            'color' => 'nullable|string|max:20',
+            'marca' => 'nullable|string|max:30',
+            'modelo' => 'nullable|string|max:4',
         ]);
 
-        // Crear vehículo
-        $vehiculo = new Vehiculo();
-        $vehiculo->user_id = auth()->user()->id; // Asegúrate de que el usuario esté autenticado
-        $vehiculo->placa = $request->placa;
-        $vehiculo->tipo = $request->tipo;
-        $vehiculo->color = $request->color;
-        $vehiculo->marca = $request->marca;
-        $vehiculo->modelo = $request->modelo;
+        // Generar una clave de acceso aleatoria
+        $claveAcceso = Str::random(10);
 
-        // Generar clave de acceso
-        $vehiculo->clave_acceso = strtoupper(Str::random(8)); // Clave aleatoria
+        // Crear el vehículo
+        $vehiculo = Vehiculo::create([
+            'user_id' => auth()->id(),
+            'placa' => $validatedData['placa'],
+            'tipo' => $validatedData['tipo'],
+            'color' => $validatedData['color'],
+            'marca' => $validatedData['marca'],
+            'modelo' => $validatedData['modelo'],
+            'clave_acceso' => $claveAcceso,
+        ]);
 
-        // Generar QR
-        $qrCode = QrCode::format('png')->size(200)->generate($vehiculo->placa);
-        $qrPath = 'qrs/' . $vehiculo->placa . '.png'; // Ruta donde guardaremos el QR
-        Storage::put($qrPath, $qrCode); // Guardar el QR
+        // Generar el QR
+        $qrContent = "Placa: {$vehiculo->placa}, Clave: {$vehiculo->clave_acceso}";
+        $qrPath = "qrs/{$vehiculo->placa}.png";
 
-        $vehiculo->qr_path = $qrPath;
-        $vehiculo->save();
+        // Guardar el QR en el sistema de archivos
+        Storage::disk('public')->put($qrPath, QrCode::format('png')->size(200)->generate($qrContent));
 
-        return redirect()->route('vehiculos.index')->with('success', 'Vehículo registrado con éxito');
+        // Actualizar la ruta del QR en la base de datos
+        $vehiculo->update(['qr_path' => $qrPath]);
+
+        return redirect()->route('vehiculos.index')->with('success', 'Vehículo registrado correctamente.');
     }
 }

@@ -15,17 +15,29 @@
                     <th class="px-6 py-3 text-left text-sm font-medium text-blue-900">Color</th>
                     <th class="px-6 py-3 text-left text-sm font-medium text-blue-900">Marca</th>
                     <th class="px-6 py-3 text-left text-sm font-medium text-blue-900">Modelo</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-blue-900">Clave de Acceso</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-blue-900">QR</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
+                @php
+                    $userRole = auth()->user()->tipo_usuario; // Obtener el rol del usuario autenticado
+                @endphp
+
                 @foreach ($vehiculos as $vehiculo)
-                    <tr>
-                        <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->placa }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->tipo }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->color }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->marca }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->modelo }}</td>
-                    </tr>
+                    @if ($userRole === 'Vigilante' || $vehiculo->user_id === auth()->id())
+                        <tr>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->placa }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->tipo }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->color }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->marca }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->modelo }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $vehiculo->clave_acceso }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">
+                                <img src="{{ Storage::url($vehiculo->qr_path) }}" alt="QR de {{ $vehiculo->placa }}" class="h-16 w-16">
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>

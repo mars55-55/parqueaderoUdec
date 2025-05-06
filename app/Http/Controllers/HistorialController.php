@@ -57,16 +57,28 @@ class HistorialController extends Controller
      */
     public function store(Request $request)
     {
+        // Validar la clave de acceso
         $request->validate([
-            'vehiculo_id' => 'required|exists:vehiculos,id',
-            'accion' => 'required|string',
+            'clave_acceso' => 'required|string',
         ]);
 
+        // Buscar el vehículo por clave de acceso
+        $vehiculo = Vehiculo::where('clave_acceso', $request->clave_acceso)->first();
+
+        if (!$vehiculo) {
+            return redirect()->back()->withErrors(['clave_acceso' => 'Clave de acceso o QR inválido.']);
+        }
+
+        // Determinar si es entrada o salida
+        $ultimaAccion = Historial::where('vehiculo_id', $vehiculo->id)->latest()->first();
+        $accion = ($ultimaAccion && $ultimaAccion->accion === 'Entrada') ? 'Salida' : 'Entrada';
+
+        // Registrar la acción en el historial
         Historial::create([
-            'vehiculo_id' => $request->vehiculo_id,
-            'accion' => $request->accion,
+            'vehiculo_id' => $vehiculo->id,
+            'accion' => $accion,
         ]);
 
-        return redirect()->route('historial.index')->with('success', 'Acción registrada en el historial.');
+        return redirect()->route('historial.index')->with('success', "Se registró la $accion del vehículo con placa {$vehiculo->placa}.");
     }
 }

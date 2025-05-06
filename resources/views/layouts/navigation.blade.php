@@ -18,9 +18,13 @@
                     <x-nav-link :href="route('vehiculos.index')" :active="request()->routeIs('vehiculos.index')" class="text-white hover:text-blue-300 font-semibold">
                         {{ __('Vehículos') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('historial.index')" :active="request()->routeIs('historial.index')" class="text-white hover:text-blue-300 font-semibold">
-                        {{ __('Historial') }}
-                    </x-nav-link>
+                    @auth
+                        @if (auth()->user()->tipo_usuario === 'Vigilante')
+                            <x-nav-link :href="route('historial.index')" :active="request()->routeIs('historial.index')" class="text-white hover:text-blue-300 font-semibold">
+                                {{ __('Historial') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
                 </div>
             </div>
 
@@ -79,9 +83,13 @@
             <x-responsive-nav-link :href="route('vehiculos.index')" :active="request()->routeIs('vehiculos.index')" class="text-white hover:text-blue-300">
                 {{ __('Vehículos') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('historial.index')" :active="request()->routeIs('historial.index')" class="text-white hover:text-blue-300">
-                {{ __('Historial') }}
-            </x-responsive-nav-link>
+            @auth
+                @if (auth()->user()->tipo_usuario === 'Vigilante')
+                    <x-responsive-nav-link :href="route('historial.index')" :active="request()->routeIs('historial.index')" class="text-white hover:text-blue-300">
+                        {{ __('Historial') }}
+                    </x-responsive-nav-link>
+                @endif
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->

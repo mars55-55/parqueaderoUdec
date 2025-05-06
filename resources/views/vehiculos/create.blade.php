@@ -9,7 +9,7 @@
         <!-- Placa -->
         <div class="mb-4">
             <label for="placa" class="block text-sm font-medium text-blue-900">Placa</label>
-            <input type="text" name="placa" id="placa" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+            <input type="text" name="placa" id="placa" maxlength="7" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
         </div>
 
         <!-- Tipo de Vehículo -->
@@ -24,19 +24,19 @@
         <!-- Color -->
         <div class="mb-4">
             <label for="color" class="block text-sm font-medium text-blue-900">Color</label>
-            <input type="text" name="color" id="color" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" name="color" id="color" maxlength="20" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
 
         <!-- Marca -->
         <div class="mb-4">
             <label for="marca" class="block text-sm font-medium text-blue-900">Marca</label>
-            <input type="text" name="marca" id="marca" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" name="marca" id="marca" maxlength="30" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
 
         <!-- Modelo -->
         <div class="mb-4">
             <label for="modelo" class="block text-sm font-medium text-blue-900">Modelo</label>
-            <input type="text" name="modelo" id="modelo" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" name="modelo" id="modelo" maxlength="4" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
 
         <!-- Botón de registro -->
