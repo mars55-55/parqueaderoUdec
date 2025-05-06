@@ -14,15 +14,19 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-emerald-900 dark:text-emerald-100 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-emerald-50 dark:bg-emerald-900">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-emerald-500 dark:text-emerald-300" />
-                </a>
+    <body class="font-sans text-gray-100 antialiased bg-gradient-to-r from-blue-900 to-blue-700">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+            <!-- Logo con fondo elíptico -->
+            <div class="mb-6">
+                <div class="bg-white rounded-full p-6 shadow-lg">
+                    <a href="/">
+                        <x-application-logo class="w-36 h-36 fill-current text-blue-900" />
+                    </a>
+                </div>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-emerald-800 shadow-md overflow-hidden sm:rounded-lg">
+            <!-- Contenedor del formulario -->
+            <div class="w-full sm:max-w-md mt-6 px-8 py-6 bg-white shadow-2xl rounded-lg">
                 {{ $slot }}
             </div>
         </div>

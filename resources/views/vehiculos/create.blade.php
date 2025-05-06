@@ -1,39 +1,50 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2>Registrar Vehículo</h2>
-    <form action="{{ route('vehiculos.store') }}" method="POST">
+<div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-center text-blue-900 mb-6">Registrar Vehículo</h2>
+    <form action="{{ route('vehiculos.store') }}" method="POST" class="bg-white shadow-lg rounded-lg p-6">
         @csrf
-        <div class="form-group">
-            <label for="placa">Placa</label>
-            <input type="text" name="placa" id="placa" class="form-control" required>
+
+        <!-- Placa -->
+        <div class="mb-4">
+            <label for="placa" class="block text-sm font-medium text-blue-900">Placa</label>
+            <input type="text" name="placa" id="placa" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
         </div>
-        
-        <div class="form-group">
-            <label for="tipo">Tipo de Vehículo</label>
-            <select name="tipo" id="tipo" class="form-control" required>
+
+        <!-- Tipo de Vehículo -->
+        <div class="mb-4">
+            <label for="tipo" class="block text-sm font-medium text-blue-900">Tipo de Vehículo</label>
+            <select name="tipo" id="tipo" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
                 <option value="Auto">Auto</option>
                 <option value="Moto">Moto</option>
             </select>
         </div>
-        
-        <div class="form-group">
-            <label for="color">Color</label>
-            <input type="text" name="color" id="color" class="form-control">
+
+        <!-- Color -->
+        <div class="mb-4">
+            <label for="color" class="block text-sm font-medium text-blue-900">Color</label>
+            <input type="text" name="color" id="color" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
 
-        <div class="form-group">
-            <label for="marca">Marca</label>
-            <input type="text" name="marca" id="marca" class="form-control">
+        <!-- Marca -->
+        <div class="mb-4">
+            <label for="marca" class="block text-sm font-medium text-blue-900">Marca</label>
+            <input type="text" name="marca" id="marca" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
 
-        <div class="form-group">
-            <label for="modelo">Modelo</label>
-            <input type="text" name="modelo" id="modelo" class="form-control">
+        <!-- Modelo -->
+        <div class="mb-4">
+            <label for="modelo" class="block text-sm font-medium text-blue-900">Modelo</label>
+            <input type="text" name="modelo" id="modelo" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </div>
 
-        <button type="submit" class="btn btn-primary">Registrar Vehículo</button>
+        <!-- Botón de registro -->
+        <div class="text-center">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Registrar Vehículo
+            </button>
+        </div>
     </form>
 </div>
 @endsection

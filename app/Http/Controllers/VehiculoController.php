@@ -4,10 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class VehiculoController extends Controller
 {
+    /**
+     * Muestra una lista de los vehículos registrados.
+     */
+    public function index()
+    {
+        // Obtener todos los vehículos de la base de datos
+        $vehiculos = Vehiculo::all();
+
+        // Retornar la vista con los datos
+        return view('vehiculos.index', compact('vehiculos'));
+    }
+
     public function create()
     {
         return view('vehiculos.create');
@@ -26,7 +40,7 @@ class VehiculoController extends Controller
 
         // Crear vehículo
         $vehiculo = new Vehiculo();
-        $vehiculo->user_id = auth()->user()->id;
+        $vehiculo->user_id = auth()->user()->id; // Asegúrate de que el usuario esté autenticado
         $vehiculo->placa = $request->placa;
         $vehiculo->tipo = $request->tipo;
         $vehiculo->color = $request->color;
@@ -34,12 +48,12 @@ class VehiculoController extends Controller
         $vehiculo->modelo = $request->modelo;
 
         // Generar clave de acceso
-        $vehiculo->clave_acceso = strtoupper(str_random(8)); // Clave aleatoria
+        $vehiculo->clave_acceso = strtoupper(Str::random(8)); // Clave aleatoria
 
         // Generar QR
         $qrCode = QrCode::format('png')->size(200)->generate($vehiculo->placa);
         $qrPath = 'qrs/' . $vehiculo->placa . '.png'; // Ruta donde guardaremos el QR
-        \Storage::put($qrPath, $qrCode); // Guardar el QR
+        Storage::put($qrPath, $qrCode); // Guardar el QR
 
         $vehiculo->qr_path = $qrPath;
         $vehiculo->save();

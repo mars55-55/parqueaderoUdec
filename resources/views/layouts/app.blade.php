@@ -14,13 +14,13 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-emerald-900 dark:bg-emerald-700">
-        <div class="min-h-screen bg-emerald-900 dark:bg-emerald-700">
+    <body class="font-sans antialiased bg-gradient-to-r from-blue-900 to-blue-700">
+        <div class="min-h-screen">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-emerald-800 text-white shadow">
+                <header class="bg-blue-800 text-white shadow-lg">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -28,7 +28,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main class="bg-emerald-50 dark:bg-emerald-600 text-emerald-900 dark:text-emerald-100">
+            <main class="bg-white text-gray-900 shadow-md sm:rounded-lg p-6">
                 @yield('content')
             </main>
         </div>

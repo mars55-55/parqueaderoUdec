@@ -35,21 +35,23 @@ Route::middleware('auth')->group(function () {
 
 // Rutas de vehículos (solo si está autenticado)
 Route::middleware('auth')->group(function () {
+    Route::get('vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index'); // Listar vehículos registrados
     Route::get('vehiculos/create', [VehiculoController::class, 'create'])->name('vehiculos.create');
     Route::post('vehiculos', [VehiculoController::class, 'store'])->name('vehiculos.store');
-    Route::get('vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index'); // Listar vehículos registrados
     Route::get('vehiculos/{vehiculo}/edit', [VehiculoController::class, 'edit'])->name('vehiculos.edit');
     Route::patch('vehiculos/{vehiculo}', [VehiculoController::class, 'update'])->name('vehiculos.update');
     Route::delete('vehiculos/{vehiculo}', [VehiculoController::class, 'destroy'])->name('vehiculos.destroy');
 });
 
-// Historial de entradas y salidas (solo si está autenticado)
+// Rutas de historial (solo si está autenticado)
 Route::middleware('auth')->group(function () {
     Route::get('historial', [HistorialController::class, 'index'])->name('historial.index');
     Route::get('historial/filtrar', [HistorialController::class, 'filter'])->name('historial.filter');
+    Route::post('historial', [HistorialController::class, 'store'])->name('historial.store');
 });
 
 // Cerrar sesión
 Route::middleware('auth')->post('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
 
+// Rutas de autenticación adicionales
 require __DIR__.'/auth.php';
