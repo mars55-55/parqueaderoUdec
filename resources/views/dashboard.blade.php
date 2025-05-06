@@ -22,9 +22,10 @@
             @endguest
         </div>
     </div>
-
-    <!-- Sección de tarjetas -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+<!-- Sección de tarjetas -->
+@auth
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+    @if (in_array(Auth::user()->tipo_usuario, ['Estudiante', 'Docente', 'Administrativo']))
         <!-- Vehículos -->
         <div class="bg-blue-50 shadow-lg sm:rounded-lg p-6">
             <h2 class="text-2xl font-semibold text-blue-900">Vehículos Registrados</h2>
@@ -42,7 +43,9 @@
                 Registrar Vehículo
             </a>
         </div>
+    @endif
 
+    @if (Auth::user()->tipo_usuario === 'Vigilante')
         <!-- Historial -->
         <div class="bg-blue-50 shadow-lg sm:rounded-lg p-6">
             <h2 class="text-2xl font-semibold text-blue-900">Historial de Entradas y Salidas</h2>
@@ -51,7 +54,18 @@
                 Ver Historial
             </a>
         </div>
-    </div>
+
+        <!-- Vehículos -->
+        <div class="bg-blue-50 shadow-lg sm:rounded-lg p-6">
+            <h2 class="text-2xl font-semibold text-blue-900">Vehículos total Registrados</h2>
+            <p class="mt-2 text-blue-700">Consulta todos vehículos registrados en el sistema.</p>
+            <a href="{{ route('vehiculos.index') }}" class="mt-4 inline-block bg-blue-500 text-white px-5 py-3 rounded-lg shadow-md hover:bg-blue-600">
+                Ver Vehículos
+            </a>
+        </div>
+    @endif
+</div>
+@endauth
 
     <!-- Información adicional -->
     <div class="mt-8 bg-blue-100 shadow-lg sm:rounded-lg p-6">
